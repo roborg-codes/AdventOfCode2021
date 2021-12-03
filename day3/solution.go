@@ -88,7 +88,6 @@ func getOxygenDropBit(bs [][]byte, index int) byte {
 			bitCount--
 		}
 	}
-	fmt.Printf("[Oxygen] bitCount: %d\n", bitCount)
 	if bitCount < 0 {
 		// One is the is the least common, drop it
 		return one
@@ -109,16 +108,12 @@ func CalculateOxygenGeneratorRate(bs [][]byte) (oxygen rate) {
 		// var index is index of bit to consider
 		// var dropValue is byte used to match lines
 		dropValue = getOxygenDropBit(bs, index)
-		prv := len(bs)
 		bs = RemoveLineFromSSlice(bs, index, dropValue)
-		crv := len(bs)
-		fmt.Printf("Iterating over index %d finished. %d items of `%d` deleted. %d items remaining.\n", index, prv-crv, dropValue, crv)
 	}
 
 	for key, value := range bs[0] {
 		if value == one {
 			oxygen |= oxygen ^ (1 << key)
-			fmt.Printf("oxygen | oxygen & (1 << %b) = %b\n", key, oxygen)
 		}
 	}
 	oxygen = ReverseBitOrder(oxygen)
@@ -155,15 +150,11 @@ func CalculateCO2ScrubberRate(bs [][]byte) (scrubber rate) {
 			return
 		}
 		dropValue = getScrubberDropBit(bs, index)
-		prv := len(bs)
 		bs = RemoveLineFromSSlice(bs, index, dropValue)
-		crv := len(bs)
-		fmt.Printf("Iterating over index %d finished. %d items of `%d` deleted. %d items remaining.\n", index, prv-crv, dropValue, crv)
 	}
 	for key, value := range bs[0] {
 		if value == one {
 			scrubber |= scrubber ^ (1 << key)
-			fmt.Printf("scrubber | scrubber & (1 << %b) = %b\n", key, scrubber)
 		}
 	}
 	scrubber = ReverseBitOrder(scrubber)
