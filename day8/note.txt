@@ -1,0 +1,2 @@
+https://github.com/Skarlso/aoc2021/blob/main/day08/part2/main.go
+https://skarlso.github.io/2021/12/08/aoc-day8/
