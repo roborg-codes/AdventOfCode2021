@@ -30,12 +30,12 @@ func ParseInput(fname string) OctopusGrid {
 	}
 
 	var input = make(OctopusGrid)
-	for y, octopuses := range strings.Split(string(inputRaw), "\n") {
-		if octopuses == "" {
+	for y, octopi := range strings.Split(string(inputRaw), "\n") {
+		if octopi == "" {
 			continue
 		}
 		input[y] = make(map[int]Octopus)
-		for x, octopus := range octopuses {
+		for x, octopus := range octopi {
 			oStr, err := strconv.Atoi(string(octopus))
 			if err != nil {
 				panic(err)
@@ -96,7 +96,6 @@ func (og OctopusGrid) Flash(y, x int) int {
 			flashes += 1
 			octopus.Flashed = true
 			og[y][x] = octopus
-			// octopus.Energy = 0 // <- might need to reset later
 
 			flashes += og.Flash(y  , x-1)
 			flashes += og.Flash(y  , x+1)
@@ -145,15 +144,13 @@ func (og OctopusGrid) MakeStep() (flashes int) {
 func PartOne(grid OctopusGrid) {
 	var flashes int
 
-	for i := 0; i < 195; i++ {
+	for i := 0; i < 100; i++ {
 		// make a step
 		flashes += grid.MakeStep()
 	}
 
 	fmt.Printf("Part one: %v\n", flashes)
 }
-
-// 100 flashes == sync
 
 func PartTwo(grid OctopusGrid) {
 	var flashes int
